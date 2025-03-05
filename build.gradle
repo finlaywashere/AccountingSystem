@@ -1,0 +1,41 @@
+plugins {
+    // Apply the application plugin to add support for building a CLI application in Java.
+    id 'application'
+    id 'java'
+    id 'org.springframework.boot' version '3.4.3'
+}
+apply plugin: 'io.spring.dependency-management'
+
+repositories {
+    // Use Maven Central for resolving dependencies.
+    mavenCentral()
+}
+
+dependencies {
+    testImplementation 'org.junit.jupiter:junit-jupiter:5.9.1'
+    implementation('org.springframework.boot:spring-boot-starter-web')
+    implementation('org.springframework.boot:spring-boot-starter-data-jpa')
+    implementation('org.springframework.boot:spring-boot-starter-security')
+    implementation('org.springframework.security:spring-security-crypto')
+    implementation 'org.xerial:sqlite-jdbc:3.34.0'
+    implementation 'org.hibernate.orm:hibernate-community-dialects:6.1.7.Final'
+    implementation 'io.jsonwebtoken:jjwt-api:0.11.5'
+    implementation 'io.jsonwebtoken:jjwt-impl:0.11.5'
+    implementation 'io.jsonwebtoken:jjwt-jackson:0.11.5'
+}
+
+application {
+    // Define the main class for the application.
+    mainClass = 'xyz.finlaym.accounting.App'
+}
+
+tasks.named('test') {
+    // Use JUnit Platform for unit tests.
+    useJUnitPlatform()
+}
+configurations.implementation.setCanBeResolved(true)
+configurations.testImplementation.setCanBeResolved(true)
+task copyDependencies(type: Copy) {
+    from configurations.testImplementation
+    into "lib"
+}
