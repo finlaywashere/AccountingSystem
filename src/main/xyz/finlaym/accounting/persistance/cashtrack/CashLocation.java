@@ -27,12 +27,19 @@ public class CashLocation {
 	@UpdateTimestamp
 	private Date updatedAt;
 	
+	@Column
+	private boolean deleted = false;
+	
+	@Column
+	private boolean virtual = false;
+	
 	public CashLocation() {
 		
 	}
-	public CashLocation(String name, String location) {
+	public CashLocation(String name, String location, boolean virtual) {
 		this.name = name;
 		this.location = location;
+		this.virtual = virtual;
 		this.amount = 0;
 	}
 	public String getName() {
@@ -53,4 +60,19 @@ public class CashLocation {
 	public void setAmount(int amount) {
 		this.amount = amount;
 	}
+	public boolean isDeleted() {
+		return deleted;
+	}
+	
+	public boolean setDeleted(boolean deleted) {
+		if(this.amount == 0) {
+			this.deleted = deleted;
+			return true;
+		}
+		return false;
+	}
+	public boolean isVirtual() {
+		return virtual;
+	}
+	
 }

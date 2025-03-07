@@ -64,6 +64,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 			filterChain.doFilter(request, response);
 		} catch (SignatureException exception) {
 			response.setStatus(401);
+			logger.info("Unauthenticated request received!");
 			handlerExceptionResolver.resolveException(request, response, null, exception);
 		} catch (Exception exception) {
 			exception.printStackTrace();

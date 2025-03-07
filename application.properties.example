@@ -1,8 +1,10 @@
-spring.application.name=sqlite
-spring.datasource.url=jdbc:sqlite:accounting.db
-spring.datasource.driver-class-name=org.sqlite.JDBC
+spring.application.name=AccountingSystem
+spring.datasource.url=jdbc:mysql://localhost:3306/accounting
+spring.datasource.username=accounting
+spring.datasource.password={PASSWORD}
+spring.datasource.driver-class-name=com.mysql.cj.jdbc.Driver
 spring.jpa.show-sql=true
-spring.jpa.database-platform=org.hibernate.community.dialect.SQLiteDialect
 spring.jpa.hibernate.ddl-auto=update
 security.jwt.expiration-time=3600000
 security.jwt.secret-key=
+logging.level.root=info

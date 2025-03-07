@@ -17,6 +17,9 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
 import xyz.finlaym.accounting.subsystem.auth.JwtAuthenticationFilter;
 
+/**
+ * Configures security filters and CORS for the system
+ */
 @Configuration
 @EnableWebSecurity
 public class SecurityConfiguration {
@@ -25,6 +28,12 @@ public class SecurityConfiguration {
 	@Autowired
     private JwtAuthenticationFilter jwtAuthenticationFilter;
 
+	/**
+	 * Creates a security filter chain that enforces auth on endpoints
+	 * @param http The HttpSecurity instance
+	 * @return A security filter chain with CSRF disabled and custom auth requirements for API endpoints
+	 * @throws Exception See DefaultSecurityFilterChain build() docs
+	 */
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
     	http.csrf(csrf -> csrf.disable())
@@ -40,12 +49,15 @@ public class SecurityConfiguration {
         return http.build();
     }
 
+    /**
+     * Configures CORS settings
+     * @return A CORS configuration that allows our origin and the methods in use by this app
+     */
     @Bean
     CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
-
         configuration.setAllowedOrigins(List.of("http://localhost:8080"));
-        configuration.setAllowedMethods(List.of("GET","POST", "PUT"));
+        configuration.setAllowedMethods(List.of("GET","POST", "PUT", "DELETE", "PATCH"));
         configuration.setAllowedHeaders(List.of("Authorization","Content-Type"));
 
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();

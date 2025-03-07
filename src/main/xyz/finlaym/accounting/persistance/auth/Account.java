@@ -38,6 +38,9 @@ public class Account implements UserDetails{
 	@Column(nullable = true)
 	private String privs;
 	
+	@Column
+	private boolean deleted = false;
+	
 	public Account() {}
 	public Account(String username, String email) {
 		this.username = username;
@@ -87,5 +90,21 @@ public class Account implements UserDetails{
 	}
 	public void setHash(String hash) {
 		this.hash = hash;
+	}
+	@Override
+	public boolean isEnabled() {
+		return !deleted;
+	}
+	@Override
+	public boolean isAccountNonExpired() {
+		return isEnabled();
+	}
+	@Override
+	public boolean isAccountNonLocked() {
+		return isEnabled();
+	}
+	@Override
+	public boolean isCredentialsNonExpired() {
+		return isEnabled();
 	}
 }
